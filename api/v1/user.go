@@ -52,7 +52,7 @@ func GetUsers(c *gin.Context) {
 }
 
 func EditUser(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 	var data model.User
 	_ = c.ShouldBindJSON(&data)
 	code := model.EditUser(id, &data)
@@ -64,7 +64,7 @@ func EditUser(c *gin.Context) {
 }
 
 func DeleteUser(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 	code := model.DeleteUser(id)
 	c.JSON(200, gin.H{
 		"status":  code,
