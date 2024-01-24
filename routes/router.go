@@ -16,6 +16,7 @@ func InitRouter() {
 		router.GET("users", v1.GetUsers)
 		router.PUT("user/:id", v1.EditUser)
 		router.DELETE("user/:id", v1.DeleteUser)
+		router.GET("user/:username", v1.UserExist)
 	}
 	err := r.Run(utils.HttpPort)
 	if err != nil {
