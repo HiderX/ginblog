@@ -24,7 +24,31 @@ func CreateArt(data *Article) int {
 	return utils.ERROR
 }
 
-func GetArt(pageSize int, pageNum int) []Article {
+func GetCateArt(id int, pageSize int, pageNum int) ([]Article, int) {
+	var cateArt []Article
+	var offset int
+	if pageSize == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+	}
+	err := Db.Preload("Category").Where("cid = ?", id).Limit(pageSize).Offset(offset).Find(&cateArt).Error
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, utils.ERROR
+	}
+	return cateArt, utils.SUCCESS
+}
+
+func GetArtInfo(id int) (Article, int) {
+	var art Article
+	err := Db.Preload("Category").Where("id = ?", id).First(&art).Error
+	if err != nil {
+		return art, utils.ERROR_ART_NOT_EXIST
+	}
+	return art, utils.SUCCESS
+}
+
+func GetArt(pageSize int, pageNum int) ([]Article, int) {
 	var articles []Article
 	var offset int
 	if pageSize == -1 {
@@ -32,11 +56,11 @@ func GetArt(pageSize int, pageNum int) []Article {
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err := Db.Limit(pageSize).Offset(offset).Find(&articles).Error
+	err := Db.Preload("Category").Limit(pageSize).Offset(offset).Find(&articles).Error
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		return nil
+		return nil, utils.ERROR
 	}
-	return articles
+	return articles, utils.SUCCESS
 
 }
 

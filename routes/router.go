@@ -27,6 +27,8 @@ func InitRouter() {
 		router.GET("articles", v1.GetArticles)
 		router.PUT("article/:id", v1.EditArticle)
 		router.DELETE("article/:id", v1.DeleteArticle)
+		router.GET("article/category/:id", v1.GetCateArt)
+		router.GET("article/info/:id", v1.GetArticle)
 	}
 	err := r.Run(utils.HttpPort)
 	if err != nil {

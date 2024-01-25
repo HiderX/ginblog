@@ -18,6 +18,34 @@ func AddArticle(c *gin.Context) {
 	})
 }
 
+func GetCateArt(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+	if pageSize == 0 {
+		pageSize = -1
+	}
+	if pageNum == 0 {
+		pageNum = -1
+	}
+	data, code := model.GetCateArt(id, pageSize, pageNum)
+	c.JSON(200, gin.H{
+		"status":  200,
+		"data":    data,
+		"message": utils.GetErrMsg(code),
+	})
+}
+
+func GetArticle(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	data, code := model.GetArtInfo(id)
+	c.JSON(200, gin.H{
+		"status":  200,
+		"data":    data,
+		"message": utils.GetErrMsg(code),
+	})
+}
+
 func GetArticles(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
 	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
@@ -27,8 +55,7 @@ func GetArticles(c *gin.Context) {
 	if pageNum == 0 {
 		pageNum = -1
 	}
-	data := model.GetArt(pageSize, pageNum)
-	code := utils.SUCCESS
+	data, code := model.GetArt(pageSize, pageNum)
 	c.JSON(200, gin.H{
 		"status":  200,
 		"data":    data,
