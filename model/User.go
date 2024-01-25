@@ -36,7 +36,13 @@ func CheckUser(username string) int {
 
 func GetUsers(pageSize int, pageNum int) []User {
 	var users []User
-	err = Db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
+	var offset int
+	if pageSize == -1 {
+		offset = -1
+	} else {
+		offset = (pageNum - 1) * pageSize
+	}
+	err = Db.Limit(pageSize).Offset(offset).Find(&users).Error
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil
 	}

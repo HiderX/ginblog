@@ -7,14 +7,14 @@ import (
 	"strconv"
 )
 
-func UserExist(c *gin.Context) {
-	username := c.Query("username")
-	code := model.CheckUser(username)
-	c.JSON(200, gin.H{
-		"status":  code,
-		"message": utils.GetErrMsg(code),
-	})
-}
+//func UserExist(c *gin.Context) {
+//	username := c.Query("username")
+//	code := model.CheckUser(username)
+//	c.JSON(200, gin.H{
+//		"status":  code,
+//		"message": utils.GetErrMsg(code),
+//	})
+//}
 
 func AddUser(c *gin.Context) {
 	var data model.User
