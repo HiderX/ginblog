@@ -21,6 +21,10 @@ func CheckCategory(name string) int {
 }
 
 func CreateCategory(data *Category) int {
+	code := CheckCategory(data.Name)
+	if code == utils.ERROR_CATEGORY_USED {
+		return utils.ERROR_CATEGORY_USED
+	}
 	err = Db.Create(&data).Error
 	if err != nil {
 		return utils.ERROR

@@ -19,13 +19,7 @@ import (
 func AddUser(c *gin.Context) {
 	var data model.User
 	_ = c.ShouldBindJSON(&data)
-	code := model.CheckUser(data.Username)
-	if code == utils.SUCCESS {
-		model.CreateUser(&data)
-	}
-	if code == utils.ERROR_USERNAME_USED {
-		code = utils.ERROR_USERNAME_USED
-	}
+	code := model.CreateUser(&data)
 	c.JSON(200, gin.H{
 		"status":  code,
 		"data":    data,

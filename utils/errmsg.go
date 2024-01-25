@@ -15,6 +15,9 @@ const (
 	// code = 2000... 分类模块的错误
 	ERROR_CATEGORY_USED      = 2001
 	ERROR_CATEGORY_NOT_EXIST = 2002
+
+	// code = 3000... 文章模块的错误
+	ERROR_ART_NOT_EXIST = 3001
 )
 
 var CodeMsg = map[int]string{
@@ -31,6 +34,9 @@ var CodeMsg = map[int]string{
 	// code = 2000... 分类模块的错误
 	ERROR_CATEGORY_USED:      "分类已存在！",
 	ERROR_CATEGORY_NOT_EXIST: "分类不存在！",
+
+	// code = 3000... 文章模块的错误
+	ERROR_ART_NOT_EXIST: "文章不存在！",
 }
 
 func GetErrMsg(code int) string {

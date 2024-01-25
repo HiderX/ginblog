@@ -17,6 +17,10 @@ type User struct {
 }
 
 func CreateUser(data *User) int {
+	code := CheckUser(data.Username)
+	if code == utils.ERROR_USERNAME_USED {
+		return utils.ERROR_USERNAME_USED
+	}
 	data.Password = ScryptPw(data.Password)
 	err = Db.Create(&data).Error
 	if err != nil {

@@ -11,13 +11,7 @@ import (
 func AddCategory(c *gin.Context) {
 	var data model.Category
 	_ = c.ShouldBindJSON(&data)
-	code := model.CheckCategory(data.Name)
-	if code == utils.SUCCESS {
-		model.CreateCategory(&data)
-	}
-	if code == utils.ERROR_CATEGORY_USED {
-		code = utils.ERROR_CATEGORY_USED
-	}
+	code := model.CreateCategory(&data)
 	c.JSON(200, gin.H{
 		"status":  code,
 		"data":    data,
