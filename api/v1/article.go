@@ -28,10 +28,11 @@ func GetCateArt(c *gin.Context) {
 	if pageNum == 0 {
 		pageNum = -1
 	}
-	data, code := model.GetCateArt(id, pageSize, pageNum)
+	data, code, total := model.GetCateArt(id, pageSize, pageNum)
 	c.JSON(200, gin.H{
 		"status":  200,
 		"data":    data,
+		"total":   total,
 		"message": utils.GetErrMsg(code),
 	})
 }
@@ -55,10 +56,11 @@ func GetArticles(c *gin.Context) {
 	if pageNum == 0 {
 		pageNum = -1
 	}
-	data, code := model.GetArt(pageSize, pageNum)
+	data, code, total := model.GetArt(pageSize, pageNum)
 	c.JSON(200, gin.H{
 		"status":  200,
 		"data":    data,
+		"total":   total,
 		"message": utils.GetErrMsg(code),
 	})
 }

@@ -19,10 +19,17 @@ import (
 func AddUser(c *gin.Context) {
 	var data model.User
 	_ = c.ShouldBindJSON(&data)
-	code := model.CreateUser(&data)
+	msg, code := utils.Validate(&data)
+	if code != utils.SUCCESS {
+		c.JSON(200, gin.H{
+			"status":  code,
+			"message": msg,
+		})
+		return
+	}
+	code = model.CreateUser(&data)
 	c.JSON(200, gin.H{
 		"status":  code,
-		"data":    data,
 		"message": utils.GetErrMsg(code),
 	})
 }
@@ -36,11 +43,12 @@ func GetUsers(c *gin.Context) {
 	if pageNum == 0 {
 		pageNum = -1
 	}
-	data := model.GetUsers(pageSize, pageNum)
+	data, total := model.GetUsers(pageSize, pageNum)
 	code := utils.SUCCESS
 	c.JSON(200, gin.H{
 		"status":  code,
 		"data":    data,
+		"total":   total,
 		"message": utils.GetErrMsg(code),
 	})
 }

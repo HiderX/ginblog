@@ -32,19 +32,21 @@ func CreateCategory(data *Category) int {
 	return utils.SUCCESS
 }
 
-func GetCategories(pageSize int, pageNum int) []Category {
+func GetCategories(pageSize int, pageNum int) ([]Category, int64) {
 	var categories []Category
 	var offset int
+	var total int64
 	if pageSize == -1 {
 		offset = -1
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
 	err = Db.Limit(pageSize).Offset(offset).Find(&categories).Error
+	Db.Model(&categories).Count(&total)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		return nil
+		return nil, 0
 	}
-	return categories
+	return categories, total
 }
 
 func EditCategory(id int, data *Category) int {
