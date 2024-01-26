@@ -3,15 +3,19 @@ package utils
 import "gopkg.in/ini.v1"
 
 var (
-	AppMode    string
-	HttpPort   string
-	Db         string
-	DbHost     string
-	DbPort     string
-	DbUser     string
-	DbPassWord string
-	Dbname     string
-	JwtKey     string
+	AppMode     string
+	HttpPort    string
+	Db          string
+	DbHost      string
+	DbPort      string
+	DbUser      string
+	DbPassWord  string
+	Dbname      string
+	JwtKey      string
+	AccessKey   string
+	SecretKey   string
+	Bucket      string
+	QiniuServer string
 )
 
 func init() {
@@ -21,6 +25,7 @@ func init() {
 	}
 	LoadServer(file)
 	LoadData(file)
+	LoadQiniu(file)
 }
 
 func LoadServer(file *ini.File) {
@@ -36,4 +41,11 @@ func LoadData(file *ini.File) {
 	DbUser = file.Section("database").Key("DbUser").MustString("ginblog")
 	DbPassWord = file.Section("database").Key("DbPassWord").MustString("aadmin123")
 	Dbname = file.Section("database").Key("Dbname").MustString("ginblog")
+}
+
+func LoadQiniu(file *ini.File) {
+	AccessKey = file.Section("qiniu").Key("AccessKey").String()
+	SecretKey = file.Section("qiniu").Key("SecretKey").String()
+	Bucket = file.Section("qiniu").Key("Bucket").String()
+	QiniuServer = file.Section("qiniu").Key("QiniuServer").String()
 }
