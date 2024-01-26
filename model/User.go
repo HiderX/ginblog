@@ -97,3 +97,18 @@ func ScryptPw(password string) string {
 	str := base64.StdEncoding.EncodeToString(key)
 	return str
 }
+
+func CheckLogin(username string, password string) int {
+	var user User
+	Db.Where("username = ?", username).First(&user)
+	if user.ID == 0 {
+		return utils.ERROR_USER_NOT_EXIST
+	}
+	if ScryptPw(password) != user.Password {
+		return utils.ERROR_PASSWORD_WRONG
+	}
+	if user.Role != 0 {
+		return utils.ERROR_USER_NO_RIGHT
+	}
+	return utils.SUCCESS
+}

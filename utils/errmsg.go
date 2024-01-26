@@ -11,13 +11,16 @@ const (
 	ERROR_TOKEN_RUNTIME  = 1005
 	ERROR_TOKEN_WRONG    = 1006
 	ERROR_TOKEN_TYPE     = 1007
-
+	ERROR_USER_NO_RIGHT  = 1008
 	// code = 2000... 分类模块的错误
 	ERROR_CATEGORY_USED      = 2001
 	ERROR_CATEGORY_NOT_EXIST = 2002
 
 	// code = 3000... 文章模块的错误
 	ERROR_ART_NOT_EXIST = 3001
+
+	// code =4000... token模块的错误
+	ERROR_AUTH_CHECK_TOKEN_FAIL = 4001
 )
 
 var CodeMsg = map[int]string{
@@ -31,12 +34,16 @@ var CodeMsg = map[int]string{
 	ERROR_TOKEN_RUNTIME:  "TOKEN已过期！",
 	ERROR_TOKEN_WRONG:    "TOKEN不正确！",
 	ERROR_TOKEN_TYPE:     "TOKEN格式错误！",
+	ERROR_USER_NO_RIGHT:  "该用户无权限！",
 	// code = 2000... 分类模块的错误
 	ERROR_CATEGORY_USED:      "分类已存在！",
 	ERROR_CATEGORY_NOT_EXIST: "分类不存在！",
 
 	// code = 3000... 文章模块的错误
 	ERROR_ART_NOT_EXIST: "文章不存在！",
+
+	// code =4000... token模块的错误
+	ERROR_AUTH_CHECK_TOKEN_FAIL: "TOKEN鉴权失败！",
 }
 
 func GetErrMsg(code int) string {
